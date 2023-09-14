@@ -8,8 +8,11 @@ Features to be added:-
                   c]Real Time Group Chat Interactions between users.
                   d]Real Time Status update of users, like Available, Offline or Online(Number Of Statuses to be decided.
 
-Frontend in ReactJS
-Backend in ExpressJS and NodeJs
-Database in MongoDB
 
-Packages planned to use Socket.io.
+    Frontend in ReactJS
+    Backend in ExpressJS and NodeJs
+    Database in MongoDB
+
+    Packages planned to use Socket.io, Redux, etc.
+
+    Chat Architecture Protocols yet to be decided - But REST API is must!
