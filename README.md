@@ -2,6 +2,7 @@
 
 Technologies To be used:- MERN Stack
 Features to be added:- 
+
                   a]Login Module for users
                   b]One on One Real time Chat interaction between users.
                   c]Real Time Group Chat Interactions between users.
