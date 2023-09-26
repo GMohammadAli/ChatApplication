@@ -5,9 +5,13 @@ require("dotenv").config();
 const express = require("express")
 const mongoose = require("mongoose")
 
+//importing files
+const userRoutes = require("./routes/userRoutes")
+
 //required env variables
 const MONGO_DB = process.env.MONGO_DB_DATABASE_URL;
 const PORT = process.env.PORT
+const secretKey = process.env.SECRET_KEY
 
 //initializing express app
 const app = express()
@@ -18,9 +22,15 @@ app.use(express.urlencoded({extended: true}))
 //if it would have been false only single line query strings would 
 //have been accepted from the url
 
-//all routes urlS
-// app.use("/users",userRoutes)
+app.use(express.json()); // Use the express.json() middleware
+//without this middleware express app couldn't interpret json requests
 
+//all routes urlS
+//using jwt for authentication and
+//bcryptjs for hashing the passwords
+app.use("/users", userRoutes)
+
+//using mongoose package to connect to mongo db cluster
 mongoose
   .connect(
     MONGO_DB,
