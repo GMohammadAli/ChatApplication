@@ -1,32 +1,67 @@
 const User = require("../models/User")
 const bcrypt = require('bcryptjs')
+const { successResponse, errorResponse } = require('../utils/responseRouter')
+const jwt = require('jsonwebtoken')
+
+const secretKey = process.env.SECRET_KEY;
 
 module.exports.loginUser = async (req, res) => {
   // login could be done by either username or email, but compulsory password
   const reqBody = req.body;
   if (reqBody.name === undefined && reqBody.email === undefined) {
-    res.status(400).json({
-      error: "Bad Request",
-      message: "Please provide either an email address or name of the user!!!",
-    });
+    return errorResponse(
+      res,
+      400,
+      "Please provide either an email address or name of the user!!!",
+      "Bad Request"
+    );
   }
 
   //search user if not present return not registered user
-  const userSearch = await User.findOne(
-    reqBody.name !== undefined
-      ? { name: reqBody.name }
-      : { email: reqBody.email }
-  ); //rectify this properly
-  console.log(userSearch)
-  if (!userSearch)
+  const userSearched = await User.findOne(
+    reqBody.name ? { name: reqBody.name } : { email: reqBody.email }
+  );
+  //console.log(userSearched)
+  if (!userSearched) {
     //not equal to null
-    res.status(401).json({
-      error: "Unauthorized",
-      message: "UserName/Email provided does not exists!!!",
+    return errorResponse(
+      res,
+      401,
+      "UserName/Email provided does not exists!!!",
+      "Unauthorized"
+    );
+  } else {
+    //if present create token and send it to frontend
+    //send token
+    const passwordMatch = await bcrypt.compare(
+      reqBody.password,
+      userSearched.password
+    );
+    if (!passwordMatch) {
+      return errorResponse(
+        res,
+        401,
+        "Incorrect Password",
+        "Authentication failed"
+      );
+    }
+
+    const userSearchParam = reqBody.name
+      ? reqBody.name 
+      : reqBody.email;
+    //signing token with respect to that user or email
+    const token = jwt.sign({ userSearchParam }, secretKey, {
+      expiresIn: "24h",
     });
-  //if present create token and send it to frontend
-  //send token
-  res.status(200).send("User Login Function Accessed!");
+
+     return successResponse(
+      res,
+      200,
+      "User Login was successfull",
+      "Logged In",
+      token
+    );
+  }
 }
 
 module.exports.registerUser = async (req, res) => {
@@ -34,17 +69,26 @@ module.exports.registerUser = async (req, res) => {
   const reqBody = req.body
   //console.log(reqBody);
   const userSearch = await User.findOne(
-    reqBody.email ? { email: reqBody.email } : { name: reqBody.name } //rectify this properly
+    reqBody.email ? { email: reqBody.email } : { name: reqBody.name } 
   );
   //console.log(userSearch)
   if (userSearch){//if null then user does not exists
     //if true then give appropriate response
-    res.status(400).json({
-      error: "Bad Request",
-      message: "UserName/ Email Already in use!!!",
-    });
-  }else {
-    //if not create a user using hashed
+    return errorResponse(
+      res,
+      400,
+      "UserName/ Email Already in use!!!",
+      "Bad Request"
+    );
+  }else if(!reqBody.password){
+    return errorResponse(
+      res,
+      400,
+      "Please provide password for this",
+      "Bad Request"
+    );
+  }else{
+    //if not create a user using hashed password
     try {
       const hashedPassword = await bcrypt.hash(reqBody.password, 10);
       const user = new User({
@@ -55,35 +99,35 @@ module.exports.registerUser = async (req, res) => {
 
       await user.save();
 
-      res.status(201).json({
-            error: "Created",
-            message: "User has been Successfully Created!!!",
-        });
+      return successResponse(
+        res,
+        201,
+        "User has been Successfully Created!!!",
+        "Created"
+      );
 
     } catch (err) {
-      res.status(400).json({
-        error: "Bad Request",
-        message: err,
-      });
+      return errorResponse(res, 400, err, "Bad Request");
     }
   }
 };
 
 module.exports.logoutUser = async (req, res) => {
-    res.send("User Logout Function Accessed!");
+   return successResponse(
+     res,
+     200,
+     "Just Delete the Token Muzaffar!!",
+     "Logged Out"
+   );
 };
 
-
-
-//Status Codes and their respective meanings
-//400 Bad Request
-//401 Unauthorized
-//403 Forbidden
-//200 OK
-// 201 Created
-
-//response structure to be followed
-// res.status(400).json({
-//   error: "Bad Request",
-//   message: "Please provide either an email address or name of the user!!!",
-// });
+module.exports.getUsers = async (req, res) => {
+  const users = await User.find({})
+   return successResponse(
+    res,
+    200,
+    "Here's the list of all the Users, Yayyy, Successfull Authentication",
+    "Fetched Users",
+    users
+  );
+}

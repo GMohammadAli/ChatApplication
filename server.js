@@ -6,12 +6,12 @@ const express = require("express")
 const mongoose = require("mongoose")
 
 //importing files
-const userRoutes = require("./routes/userRoutes")
+const userRoutes = require("./routes/userRoutes");
+const { errorResponse } = require("./utils/responseRouter");
 
 //required env variables
 const MONGO_DB = process.env.MONGO_DB_DATABASE_URL;
 const PORT = process.env.PORT
-const secretKey = process.env.SECRET_KEY
 
 //initializing express app
 const app = express()
@@ -29,6 +29,13 @@ app.use(express.json()); // Use the express.json() middleware
 //using jwt for authentication and
 //bcryptjs for hashing the passwords
 app.use("/users", userRoutes)
+
+
+//If no routes are matched
+app.all("*", (req, res) => {
+  return errorResponse(res, 400, "The Request Route that you are trying to access is not Available!!!", "Bad Request");
+});
+
 
 //using mongoose package to connect to mongo db cluster
 mongoose
