@@ -8,7 +8,7 @@ const secretKey = process.env.SECRET_KEY;
 module.exports.loginUser = async (req, res) => {
   // login could be done by either username or email, but compulsory password
   const reqBody = req.body;
-  if (reqBody.name === undefined && reqBody.email === undefined) {
+  if (reqBody.name === undefined || reqBody.email === undefined) {
     return errorResponse(
       res,
       400,
