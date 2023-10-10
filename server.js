@@ -4,6 +4,7 @@ require("dotenv").config();
 //importing modules
 const express = require("express")
 const mongoose = require("mongoose")
+const cors = require("cors");
 
 //importing files
 const userRoutes = require("./routes/userRoutes");
@@ -24,6 +25,14 @@ app.use(express.urlencoded({extended: true}))
 
 app.use(express.json()); // Use the express.json() middleware
 //without this middleware express app couldn't interpret json requests
+
+const corsOption = {
+  origin: ["http://localhost:5173/"],
+};
+app.use(cors(corsOption));
+
+//if you want in every domain then, for allowing all websites to access
+// app.use(cors());
 
 //all routes urlS
 //using jwt for authentication and
