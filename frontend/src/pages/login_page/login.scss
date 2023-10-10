@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.login-main-container {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0 2vw;
+    .login-left-image {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2vw;
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+    .login-create-right-container {
+        width: 50%;
+        height: 100vh;
+        // border: 1px solid red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .login-both-container {
+            width: calc(320px + 3vw);
+            // border: 2px solid rgb(243, 133, 23);
+            .login-singup-button-container {
+                width: 100%;
+                height: calc(45px + .2vh);
+                background-color:rgb(107, 107, 246);
+                color: white;
+                position: relative;
+                border-radius: 200px;
+               
+               
+                // border: 2px solid rgb(191, 83, 212);
+                
+
+                &::after {
+                    position: absolute;
+                    content: "LOGIN";
+                    top: 0;
+                    left: 0;
+                    width: 50%;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    text-align: center;
+                    font-size: 100%;
+                    font-weight: 600;
+                    z-index: 1;
+                   
+                    
+
+                }
+                &::before {
+                    position: absolute;
+                    content: "SIGN UP";
+                    top: 0;
+                    right: 0;
+                    width: 50%;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    text-align: center;
+                    font-size: 100%;
+                    font-weight: 600;
+                    
+                    
+
+                }
+
+                .login-singup-button{
+                    position: absolute;
+                    z-index: 999999;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100%;
+                    width: 50%;
+                    font-size: 100%;
+                    font-weight: 600;
+                    transition: all .8s;
+                    cursor: pointer;
+                    background-color: blue;
+                    color: wheat;
+                    border-radius: 200px;
+                   
+                    
+                }
+                #so{
+                    display: none;
+                }
+                // #so:checked~ label>.login-singup-button{
+                    
+                //     transform: translateX(100%);
+                //     transition: all .8s;
+
+                // }
+            }
+        }
+
+    }
+}
+
+
+.login-page,.create-account{
+    // border: 2px solid red;
+    padding: 2vw 0vw;
+}
+.email-shock-para{
+    color: red;
+    font-size: calc(.4rem + .4vw);
+}
+.login-form{
+    fieldset{
+        border: 2px solid rgb(199, 201, 251);
+        border-radius: 10px;
+        margin-bottom: 20px;
+        &:focus-within{
+            border: 2px solid rgb(72, 78, 246) !important;
+        }
+        legend{
+            padding:0 4px;
+            margin-left: 10px;
+           font-size: calc(.4rem + .4vw);
+           color: rgb(158, 163, 167);
+         
+        }
+        input{
+            width: 100%;
+            padding: 8px 15px ;
+            border-radius: 10px;
+            font-size: calc(.6rem + .6vw);
+            border: none;
+            outline: none; 
+            color: rgb(89, 91, 92);
+            &::placeholder{
+                color: rgb(165, 167, 158);
+            }
+          
+        }
+    }
+    .login-page-button{
+        width: 100%;
+        height: calc(45px + .2vh);
+        border-radius: 200px;
+        // background-color: rgb(107, 107, 246);
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        margin-top: 10px;
+        font-size: calc(.6rem + .6vw);
+        &:hover{
+            color: rgb(0, 255, 102);
+        }
+
+    }
+    .login-page-forgot-password{
+        text-align: center;
+        margin: 10px 0;
+        padding: 10px 0;
+    }
+
+}
+@media (max-width:900px) {
+    .login-main-container {
+
+        .login-left-image {
+            display: none;
+        }
+        .login-create-container {
+            width: 100%;
+        }
+    }
+
+}
+@media (max-width:900px) {
+    .login-main-container {
+        .login-create-right-container {
+            width: 100%;
+        }
+    }
+
+}
