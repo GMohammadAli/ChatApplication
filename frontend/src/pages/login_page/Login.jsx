@@ -13,9 +13,7 @@ const getdatafromlocsto = () => {
     } else {
         return []
     }
-
 }
-
 export default function Login() {
     const Goto = useNavigate();
     let [bolin,
