@@ -1,11 +1,11 @@
-const User = require("../models/User")
-const bcrypt = require('bcryptjs')
-const { successResponse, errorResponse } = require('../utils/responseRouter')
-const jwt = require('jsonwebtoken')
+import User from "../models/User.js"
+import bcrypt from "bcryptjs"
+import { successResponse, errorResponse} from "../utils/responseRouter.js"
+import jwt from "jsonwebtoken"
 
 const secretKey = process.env.SECRET_KEY;
 
-module.exports.loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   // login could be done by either username or email, but compulsory password
   const reqBody = req.body;
   if (reqBody.name === undefined && reqBody.email === undefined) {
@@ -64,7 +64,7 @@ module.exports.loginUser = async (req, res) => {
   }
 }
 
-module.exports.registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   //search if already existing user
   const reqBody = req.body
   //console.log(reqBody);
@@ -112,7 +112,7 @@ module.exports.registerUser = async (req, res) => {
   }
 };
 
-module.exports.logoutUser = async (req, res) => {
+export const logoutUser = async (req, res) => {
    return successResponse(
      res,
      200,
@@ -121,7 +121,7 @@ module.exports.logoutUser = async (req, res) => {
    );
 };
 
-module.exports.getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
   const users = await User.find({})
    return successResponse(
     res,

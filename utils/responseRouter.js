@@ -1,4 +1,4 @@
-module.exports.successResponse = (res, statusCode, msg, actionPerformed, jsonDataToBeReturned) => {
+export const successResponse = (res, statusCode, msg, actionPerformed, jsonDataToBeReturned) => {
    res.status(statusCode).json({
     action: actionPerformed,
     message: msg,
@@ -7,7 +7,7 @@ module.exports.successResponse = (res, statusCode, msg, actionPerformed, jsonDat
   });
 }
 
-module.exports.errorResponse = (
+export const errorResponse = (
   res,
   statusCode,
   msg,

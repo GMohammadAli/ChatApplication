@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const { errorResponse } = require('../utils/responseRouter');
+import jwt from "jsonwebtoken"
+import { errorResponse } from "../utils/responseRouter.js"
 const secretKey = process.env.SECRET_KEY;
 
 //verify json token
-module.exports.isAuthenticated = async (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
     const token = req.headers.authorization;
 
     if (!token) {
@@ -24,4 +24,4 @@ module.exports.isAuthenticated = async (req, res, next) => {
     });
 }
 
-const isAuthorOfChat = async (req, res, next) => {};
+export const isAuthorOfChat = async (req, res, next) => {};

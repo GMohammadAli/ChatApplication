@@ -1,19 +1,20 @@
-const express = require("express")
-const router = express.Router()
-const userController = require("../controllers/userController")
-const { isAuthenticated } = require("../middlewares/isAuthenticated")
+import express from "express"
+import {loginUser, registerUser, getUsers, logoutUser} from "../controllers/userController.js"
+import { isAuthenticated } from "../middlewares/isAuthenticated.js";
+
+const router = express.Router();
 
 
 router.route('/login')
-    .post(userController.loginUser)
+    .post(loginUser)
 
 router.route('/register')
-    .post(userController.registerUser)
+    .post(registerUser)
 
 router.route('/get')
-    .get(isAuthenticated , userController.getUsers)
+    .get(isAuthenticated , getUsers)
 
 router.route('/logout')
-    .post(userController.logoutUser)
+    .post(logoutUser)
 
-module.exports = router
+export default router

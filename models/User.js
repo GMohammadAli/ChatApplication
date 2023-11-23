@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose";
 
 const genderEnum = {
     "Male" : "M",
@@ -33,4 +33,4 @@ const userModelStructure = {
 
 const userSchema = new mongoose.Schema(userModelStructure);
 
-module.exports = mongoose.model("User", userSchema)
+export default mongoose.model("User", userSchema)

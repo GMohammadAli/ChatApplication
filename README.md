@@ -2,7 +2,6 @@
 
 Technologies To be used:- MERN Stack
 Features to be added:- 
-
                   a]Login Module for users
                   b]One on One Real time Chat interaction between users.
                   c]Real Time Group Chat Interactions between users.
@@ -15,4 +14,4 @@ Features to be added:-
 
     Packages planned to use Socket.io, Redux, etc.
 
-    Chat Architecture Protocols yet to be decided - But REST API is must!
+    Chat Architecture Protocols yet to be decided - XMPP over Web Socket along with REST API!!

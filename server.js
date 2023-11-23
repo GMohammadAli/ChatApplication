@@ -1,17 +1,20 @@
 //using dotenv package to link to env variables
 //to this project
-require("dotenv").config();
+import { config } from "dotenv"
+config();
 //importing modules
-const express = require("express")
-const mongoose = require("mongoose")
-const cors = require("cors");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import { Server } from "socket.io"
 
-//importing files
-const userRoutes = require("./routes/userRoutes");
-const { errorResponse } = require("./utils/responseRouter");
+//importing files - make this import similar to react js imports
+import userRoutes from "./routes/userRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
+import { errorResponse } from "./utils/responseRouter.js";
 
 //required env variables
-const MONGO_DB = process.env.MONGO_DB_DATABASE_URL;
+const MONGO_DB = process.env.MONGO_DB_DATABASE_URL; 
 const PORT = process.env.PORT
 
 //initializing express app
@@ -24,7 +27,7 @@ app.use(express.urlencoded({extended: true}))
 //have been accepted from the url
 
 app.use(express.json()); // Use the express.json() middleware
-//without this middleware express app couldn't interpret json requests
+//without this middleware express app can't interpret json requests
 
 const corsOption = {
   origin: ["http://localhost:5173/"],
@@ -38,6 +41,8 @@ app.use(cors(corsOption));
 //using jwt for authentication and
 //bcryptjs for hashing the passwords
 app.use("/users", userRoutes)
+
+app.use("/chat", chatRoutes)
 
 
 //If no routes are matched
